@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Como Chegar ao SIM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .erro {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz - Como Chegar ao SIM</h1>
+        <p id="pergunta"></p>
+        <div id="opcoes"></div>
+        <button onclick="proximaPergunta()">Próxima Pergunta</button>
+        <p id="pontuacao"></p>
+    </div>
+
+    <script>
+        const perguntas = [
+            { pergunta: "Qual é o principal conceito abordado no livro?", opcoes: ["Negociação ganha-ganha", "Venda agressiva", "Conflito armado"], correta: 0 },
+            { pergunta: "O que significa separar as pessoas do problema?", opcoes: ["Evitar qualquer negociação", "Focar nos interesses e não nas emoções", "Desconsiderar a posição da outra parte"], correta: 1 },
+            { pergunta: "Qual é um dos pilares da negociação baseada em princípios?", opcoes: ["Imposição de poder", "Critérios objetivos", "Manipulação emocional"], correta: 1 },
+            { pergunta: "O que significa focar nos interesses e não nas posições?", opcoes: ["Defender rigidamente sua posição", "Buscar compreender os interesses subjacentes", "Ignorar a outra parte"], correta: 1 },
+            { pergunta: "Qual a melhor maneira de gerar opções para ganhos mútuos?", opcoes: ["Aceitar a primeira solução apresentada", "Explorar múltiplas alternativas criativas", "Impor sua solução"], correta: 1 },
+            { pergunta: "O que pode ajudar a lidar com partes difíceis na negociação?", opcoes: ["Ser flexível e utilizar critérios objetivos", "Evitar qualquer diálogo", "Ceder em tudo"], correta: 0 },
+            { pergunta: "Por que usar critérios objetivos em uma negociação?", opcoes: ["Para evitar conflitos desnecessários", "Para manipular a outra parte", "Para ganhar a qualquer custo"], correta: 0 },
+            { pergunta: "Como deve ser uma comunicação eficaz na negociação?", opcoes: ["Baseada em escuta ativa e respeito", "Baseada em imposição de ideias", "Sem consideração pelos sentimentos da outra parte"], correta: 0 },
+            { pergunta: "O que fazer quando a outra parte se recusa a negociar?", opcoes: ["Utilizar uma estratégia de mediação", "Desistir imediatamente", "Ameaçar a outra parte"], correta: 0 },
+            { pergunta: "O que é o BATNA em uma negociação?", opcoes: ["Melhor Alternativa a um Acordo Negociado", "Uma técnica de manipulação", "Uma tática de coerção"], correta: 0 },
+            { pergunta: "Qual é a importância de conhecer o seu BATNA?", opcoes: ["Ajudar a tomar decisões informadas", "Evitar qualquer negociação", "Convencer a outra parte a aceitar sua proposta"], correta: 0 },
+            { pergunta: "O que significa insistir em critérios objetivos?", opcoes: ["Basear decisões em padrões justos", "Basear decisões apenas em emoções", "Usar a força para ganhar"], correta: 0 },
+            { pergunta: "O que pode prejudicar uma negociação?", opcoes: ["Falta de empatia", "Escuta ativa", "Uso de critérios objetivos"], correta: 0 },
+            { pergunta: "O que é a negociação integrativa?", opcoes: ["Uma abordagem ganha-ganha", "Um modelo de competição", "Uma tática de coerção"], correta: 0 },
+        ];
+
+        let indiceAtual = 0;
+        let pontuacao = 0;
+
+        function carregarPergunta() {
+            if (indiceAtual >= perguntas.length) {
+                document.getElementById("pergunta").innerText = "Fim do jogo!";
+                document.getElementById("opcoes").innerHTML = "";
+                document.getElementById("pontuacao").innerText = `Sua pontuação: ${pontuacao} de ${perguntas.length}`;
+                return;
+            }
+            
+            let perguntaAtual = perguntas[indiceAtual];
+            document.getElementById("pergunta").innerText = perguntaAtual.pergunta;
+            document.getElementById("pergunta").classList.remove("erro");
+            let opcoesHTML = "";
+            
+            perguntaAtual.opcoes.forEach((opcao, index) => {
+                opcoesHTML += `<button onclick='verificarResposta(${index})'>${opcao}</button><br>`;
+            });
+            
+            document.getElementById("opcoes").innerHTML = opcoesHTML;
+        }
+
+        function verificarResposta(indice) {
+            if (indice === perguntas[indiceAtual].correta) {
+                pontuacao++;
+                indiceAtual++;
+                carregarPergunta();
+            } else {
+                document.getElementById("pergunta").classList.add("erro");
+            }
+        }
+
+        function proximaPergunta() {
+            carregarPergunta();
+        }
+
+        carregarPergunta();
+    </script>
+</body>
+</html>
